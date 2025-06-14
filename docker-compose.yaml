@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  # База данных PostgreSQL
+  db:
+    image: postgres:17.5-alpine
+    volumes:
+      - ./app_data/data/db/pgdata:/var/lib/postgresql/pgdata
+    privileged: true
+    restart: always
+    ports:
+      - '5432:5432'
+
+
+    environment:
+      POSGRES_DB: 'indsol'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: '123'
+      PGDATA: '/var/lib/postgresql/pgdata'
