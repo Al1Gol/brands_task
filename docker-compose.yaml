@@ -13,7 +13,7 @@ services:
 
 
     environment:
-      POSGRES_DB: 'indsol'
+      POSGRES_DB: 'branddb'
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: '123'
       PGDATA: '/var/lib/postgresql/pgdata'
