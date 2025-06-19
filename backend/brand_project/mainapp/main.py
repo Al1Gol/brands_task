@@ -1,8 +1,7 @@
 from fastapi import FastAPI
+from mainapp.router import router
 import os
 
 app = FastAPI()
 
-#@app.get("/students")
-#def get_all_students():
-#   return json_to_dict_list(path_to_json)
+app.include_router(router)

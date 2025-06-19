@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import get_args
 
+from sqlalchemy.sql import func
 from sqlalchemy.sql import false, true, text
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.ext.declarative import declarative_base
@@ -12,15 +13,15 @@ CrossType = ['Локальный', 'ТекДок']
 
 Base = declarative_base()
 
-# создаем модель таблицы студентов
+# Модель "Бренды"
 class Brands(Base):
 
     __tablename__ = 'brands'
     __tableargs__ = {'comment': 'brands'}
 
     id = Column(Integer, nullable=False, unique=True, primary_key=True, autoincrement=True)
-    created_at = Column(DateTime, server_default=str(datetime.now))
-    updated_at = Column(DateTime, server_default=str(datetime.now), onupdate=datetime.now)
+    created_at = Column(DateTime(timezone=True), default=func.now())
+    updated_at = Column(DateTime(timezone=True), default=datetime.now(), onupdate=datetime.now())
     name = Column(String)
     slug = Column(String)
     priority = Column(SmallInteger, default=0, server_default=text('0'))
@@ -40,6 +41,7 @@ class Brands(Base):
     def __repr__(self):
         return str(self)
 
+# Модель "Кроссы"
 class Crosses(Base):
 
     __tablename__ = 'crosses'
@@ -60,6 +62,7 @@ class Crosses(Base):
     def __repr__(self):
         return str(self)
 
+# Модель "Страны"
 class Countries(Base):
 
     __tablename__ = 'countries'
@@ -77,3 +80,14 @@ class Countries(Base):
 
     def __repr__(self):
         return str(self)
+
+# Модель для связи таблици "Countries" с таблицами "Crosses" и "Brands"
+class CountriesRelationships(Base):
+
+    __tablename__ = 'countries_rel'
+    __tableargs__ = {'comment': 'countries_rel'}
+
+    id = Column(Integer, nullable=False, unique=True, primary_key=True, autoincrement=True)
+    country_id = Column(Integer, ForeignKey("countries.id"))
+    brand_id = Column(Integer, ForeignKey("brands.id"), nullable=True)
+    cross_id = Column(Integer, ForeignKey("crosses.id"), nullable=True)
