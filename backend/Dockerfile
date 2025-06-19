@@ -9,7 +9,7 @@ ENV PYTHONDONTWRITEBYCODE 1
 WORKDIR /app/backend
 
 # Корпирование проекта
-COPY ./indsol_web /app/backend/
+COPY ./ /app/backend/
 
 # Установка пакетов
 RUN pip install uv
