@@ -1,5 +1,5 @@
 from datetime import datetime, date
-from typing import Optional
+from typing import Optional, List
 import re
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -18,6 +18,7 @@ class SBrandAdd(BaseModel):
     has_contact: Optional[bool] = None
     invisible_ws: Optional[bool] = None
     trademark_is_active: Optional[bool] = None
+    countries: Optional[List] = []
 
     #Представление данных в виде словаря
     def to_dict(self):
@@ -33,6 +34,7 @@ class SBrandAdd(BaseModel):
             "has_contact": self.has_contact,
             "invisible_ws": self.invisible_ws,
             "trademark_is_active": self.trademark_is_active,
+            "countries": self.countries
         }
     
 

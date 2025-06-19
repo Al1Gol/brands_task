@@ -1,0 +1,19 @@
+[project]
+name = "brand_projects"
+
+version = "0.0.0"
+
+authors = [
+    { name = "Albert Korepanov", email = "al1working@mail.com" },
+]
+# https://docs.astral.sh/uv/reference/resolver-internals/#requires-python
+requires-python = "==3.12.*"
+# https://docs.astral.sh/uv/concepts/dependencies/#project-dependencies
+dependencies = [
+    "sqlalchemy==2.0.*",
+    "alembic==1.16.*",
+    "fastapi==0.115.*",
+    "pydantic==2.11.*",
+    "uvicorn==0.34.*",
+    "uv==0.7.*"
+]

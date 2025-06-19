@@ -2,6 +2,7 @@ from sqlalchemy import select
 from mainapp.database import async_session_maker 
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import update as sqlalchemy_update, delete as sqlalchemy_delete
+from sqlalchemy.orm import selectinload, joinedload
 
 from mainapp.models import Brands, Crosses, Countries
 
@@ -13,9 +14,11 @@ class BrandsView:
     @classmethod
     async def get_all_brands(cls):
         async with async_session_maker() as session: 
-            query = select(Brands)
+            query = select(Brands).options(selectinload(Brands.countries))
+            #query = select(Brands))
             result = await session.execute(query)
-            return result.scalars().all()
+            all_res = result.scalars().all()            
+        return result.scalars().all()
 
     # Получение конкретного бренда
     @classmethod
@@ -31,7 +34,16 @@ class BrandsView:
     async def add_brand(self, **values):
         async with async_session_maker() as session:
             async with session.begin():
+                countries = values.pop("countries")
                 new_instance = Brands(**values)
+                for country in countries:
+                    query = select(Countries).where(Countries.name == country)
+                    db_country = (await session.execute(query)).scalar_one_or_none()
+                    # If tag does not exist, create it
+                    if db_country is None:
+                        db_country = Countries(name=country)
+                        session.add(id)
+                    new_instance.countries.append(db_country)
                 session.add(new_instance)
                 try:
                     await session.commit()

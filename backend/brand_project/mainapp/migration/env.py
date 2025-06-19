@@ -5,7 +5,7 @@ sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
 from mainapp.database import DATABASE_URL
 from mainapp.models import Base
-from mainapp.models import Crosses, Countries, Brands
+from mainapp.models import Brands, Crosses, Countries, CountriesToBrandsRel, CountriesToCrossesRel
 
 import asyncio
 from logging.config import fileConfig
