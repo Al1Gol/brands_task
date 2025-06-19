@@ -19,12 +19,13 @@ services:
       PGDATA: '/var/lib/postgresql/pgdata'
 
   backend:
-    build: ./backend
-    command: bash -c "
-          python -m brand_project/alembic revision --autogenerate -m 'Add Countries Relationships'"
-    privileged: true
-    restart: always
-    ports:
-        - 8000:8000
-    depends_on: 
-        - db
+      build: ./backend
+      command: bash -c "python -m uvicorn mainapp.main:app --reload"
+      environment:
+          - PATH=/directory/bin:$PATH
+      privileged: true
+      restart: always
+      ports:
+          - 8000:8000
+      depends_on: 
+          - db
