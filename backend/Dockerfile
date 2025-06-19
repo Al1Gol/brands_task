@@ -14,3 +14,5 @@ COPY ./ /app/backend/
 # Установка пакетов
 RUN pip install uv
 RUN uv sync
+
+WORKDIR /app/backend/brand_project/
