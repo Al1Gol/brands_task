@@ -5,12 +5,11 @@ services:
   db:
     image: postgres:17.5-alpine
     volumes:
-      - ./app_data/data/db/pgdata:/var/lib/postgresql/pgdata
+      - .data/db/pgdata:/var/lib/postgresql/pgdata
     privileged: true
     restart: always
     ports:
       - '5432:5432'
-
 
     environment:
       POSGRES_DB: 'branddb'
@@ -20,9 +19,9 @@ services:
 
   backend:
       build: ./backend
-      command: bash -c "python -m uvicorn mainapp.main:app --reload"
-      environment:
-          - PATH=/directory/bin:$PATH
+      command: bash -c "python -m alembic revision --autogenerate -m 'Init' && python -m /app/backend/brand_project/uvicorn mainapp.main:app --reload"
+      volumes:
+      - ./backend/brand_project/mainapp/migration:/app/backend/brand_project/mainapp/migration
       privileged: true
       restart: always
       ports:
