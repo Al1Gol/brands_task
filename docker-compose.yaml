@@ -19,7 +19,7 @@ services:
 
   backend:
       build: ./backend
-      command: bash -c "python -m alembic revision --autogenerate -m 'Init' && python -m /app/backend/brand_project/uvicorn mainapp.main:app --reload"
+      command: bash -c "python -m alembic revision --autogenerate -m 'Init' && python -m alembic upgrade head  &&  python -m /app/backend/brand_project/uvicorn mainapp.main:app --reload"
       volumes:
       - ./backend/brand_project/mainapp/migration:/app/backend/brand_project/mainapp/migration
       privileged: true
